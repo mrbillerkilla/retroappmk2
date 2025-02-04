@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="/static/css/style.css">
+
+<h1>Welkom, <%= user.username %></h1>
+<a href="/logout">Logout</a>
+
+<h2>Alle Klassen:</h2>
+<ul>
+    <% classes.forEach(function(classItem) { %>
+        <li><%= classItem.name %></li>
+    <% }) %>
+</ul>
+
+<% if (showAddRetrospective) { %>
+    <a href="/add-retrospective" class="btn">Voeg een Retrospectief Toe</a>
+<% } %>
+
+<h3>Je Retrospectieven:</h3>
+<% if (retrospectives.length === 0) { %>
+    <p>Er zijn geen retrospectieven voor jouw klas op dit moment.</p>
+<% } else { %>
+    <% retrospectives.forEach(function(retrospective) { %>
+        <div class="retrospective">
+            <h4><%= retrospective.name %> (ID: <%= retrospective.id %>)</h4>
+
+            <% retrospective.questions.forEach(function(question) { %>
+                <div class="question">
+                    <p><strong>Vraag:</strong> <%= question.text %></p>
+
+                    <% if (user.role === 'student') { %>
+                        <% let studentAnswer = retrospective.student_answers.find(a => a.question_text === question.text); %>
+                        <% if (studentAnswer) { %>
+                            <p><strong>Jouw Antwoord:</strong> <%= studentAnswer.answer %></p>
+                        <% } else { %>
+                            <p><strong>Je hebt nog geen antwoord gegeven.</strong></p>
+                        <% } %>
+                    <% } else if (user.role === 'teacher') { %>
+                        <h5>Antwoorden van studenten:</h5>
+                        <% let allAnswers = retrospective.all_student_answers.filter(a => a.question_text === question.text); %>
+                        <% if (allAnswers.length > 0) { %>
+                            <ul>
+                                <% allAnswers.forEach(function(answer) { %>
+                                    <li><strong><%= answer.student_name %> (Klas: <%= answer.class_name %>):</strong> <%= answer.answer %></li>
+                                <% }); %>
+                            </ul>
+                        <% } else { %>
+                            <p>Geen antwoorden van studenten.</p>
+                        <% } %>
+                    <% } %>
+                </div>
+            <% }) %>
+
+            <% if (user.role === 'student') { %>
+                <% let allAnswered = retrospective.questions.every(function(question) { 
+                    return retrospective.student_answers.some(function(answer) { 
+                        return answer.question_text === question.text; 
+                    }); 
+                }); %>
+
+                <% if (allAnswered) { %>
+                    <a href="/retrospective/<%= retrospective.id %>/edit">Bewerk antwoorden</a>
+                <% } else { %>
+                    <a href="/retrospective/<%= retrospective.id %>">Beantwoord Retrospectief</a>
+                <% } %>
+            <% } else if (user.role === 'teacher') { %>
+                <!-- Verwijderknop met bevestigingspopup -->
+                <form action="/retrospective/<%= retrospective.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Weet je zeker dat je dit retrospectief wilt verwijderen?')">
+                    <button type="submit">Verwijderen</button>
+                </form>
+                
+            <% } %>
+        </div>
+    <% }) %>
+<% } %>
+<link rel="stylesheet" href="/static/css/style.css">

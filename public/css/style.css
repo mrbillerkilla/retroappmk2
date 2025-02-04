@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #DB227D;
+    color: #fff;
+}
+
+form {
+    margin: 20px 0;
+}
+
+input, textarea, button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.retrospective {
+    margin: 100px 0;
+    background: #c11b6c;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+.question {
+    border-top: 1px solid black;
+}
+
+a {
+    background-color: #1987ff;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}

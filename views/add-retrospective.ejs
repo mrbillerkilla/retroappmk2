@@ -1,0 +1,49 @@
+<h1>Voeg een Retrospectief Toe</h1>
+
+<form action="/submit-retrospective" method="POST">
+    <!-- Naam van het Retrospectief -->
+    <label for="name">Naam van het Retrospectief:</label>
+    <input type="text" id="name" name="name" placeholder="Typ een naam voor het retrospectief" required>
+
+    <!-- Klas Selectie -->
+    <label for="class">Kies een klas:</label>
+    <select name="class_id" id="class">
+        <option value="">Selecteer een klas</option>
+        <% classes.forEach(function(classItem) { %>
+            <option value="<%= classItem.id %>"><%= classItem.name %></option>
+        <% }) %>
+    </select>
+
+    <!-- Vraagvelden -->
+    <h3>Voeg Vragen Toe</h3>
+    <div id="questions-container">
+        <div class="question">
+            <label for="question_1">Vraag 1:</label>
+            <input type="text" name="questions[]" id="question_1" placeholder="Typ hier een vraag" required>
+        </div>
+        <div class="question">
+            <label for="question_2">Vraag 2:</label>
+            <input type="text" name="questions[]" id="question_2" placeholder="Typ hier een vraag" required>
+        </div>
+        <!-- Je kunt meerdere vraagvelden toevoegen via JavaScript -->
+    </div>
+
+    <button type="submit">Verstuur Retrospectief</button>
+</form>
+
+<script>
+    // Optioneel: Voeg dynamisch meer vraagvelden toe
+    let questionCount = 2;
+    function addQuestionField() {
+        questionCount++;
+        const container = document.getElementById("questions-container");
+        const newField = document.createElement("div");
+        newField.classList.add("question");
+        newField.innerHTML = `
+            <label for="question_${questionCount}">Vraag ${questionCount}:</label>
+            <input type="text" name="questions[]" id="question_${questionCount}" placeholder="Typ hier een vraag" required>
+        `;
+        container.appendChild(newField);
+    }
+</script>
+<link rel="stylesheet" href="/static/css/style.css">

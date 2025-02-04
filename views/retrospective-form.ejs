@@ -1,0 +1,16 @@
+<h1>Vul het retrospectief in voor <%= retrospective.class_name %></h1>
+
+<form action="/retrospective/submit" method="POST">
+    <input type="hidden" name="retrospective_id" value="<%= retrospective.id %>">
+
+    <% retrospective.questions.forEach(function(question) { %>
+        <div>
+            <label for="answer_<%= question.id %>"><%= question.text %></label>
+            <textarea name="answer_<%= question.id %>" id="answer_<%= question.id %>" required></textarea>
+        </div>
+    <% }); %>
+
+    <button type="submit">Verstuur</button>
+</form>
+
+<link rel="stylesheet" href="/static/css/style.css">

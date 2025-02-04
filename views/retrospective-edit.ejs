@@ -1,0 +1,13 @@
+<h1>Beantwoord Retrospectief: <%= retrospective.name %></h1>
+
+<form action="/retrospective/<%= retrospective.id %>/update" method="POST">
+    <% questions.forEach(function(question) { %>
+        <div class="question">
+            <p><strong>Vraag:</strong> <%= question.text %></p>
+            <textarea name="answer_<%= question.id %>"><%= answers[question.id] || '' %></textarea>
+        </div>
+    <% }) %>
+
+    <button type="submit">Beantwoord bijwerken</button>
+</form>
+<link rel="stylesheet" href="/static/css/style.css">
