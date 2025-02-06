@@ -16,8 +16,8 @@ app.use(express.json());
 // MySQL-verbinding maken
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root', // Standaard MySQL-gebruiker
-    password: '', // Leeg wachtwoord voor WAMP (standaardinstelling)
+    user: 'fatih', // Standaard MySQL-gebruiker
+    password: 'fatihdb', // Leeg wachtwoord voor WAMP (standaardinstelling)
     database: 'retrospective',
 });
 
